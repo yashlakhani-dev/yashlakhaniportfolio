@@ -204,53 +204,6 @@
     border-radius: 6px;
     overflow: hidden;
     box-shadow: 0 1px 4px rgba(0,0,0,0.08);
-    text-decoration: none;
-    display: block;
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
-  }
-
-  .video-card:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 6px 20px rgba(0,0,0,0.13);
-  }
-
-  .video-thumb {
-    width: 100%;
-    aspect-ratio: 16/9;
-    background: linear-gradient(135deg, #0a2533 0%, #134453 60%, #0e3545 100%);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    position: relative;
-    gap: 10px;
-  }
-
-  .video-play {
-    width: 48px;
-    height: 48px;
-    border: 2px solid rgba(0,195,255,0.6);
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: var(--blue9);
-    font-size: 16pt;
-    padding-left: 4px;
-    transition: background 0.2s, border-color 0.2s;
-  }
-
-  .video-card:hover .video-play {
-    background: rgba(0,195,255,0.15);
-    border-color: var(--blue9);
-  }
-
-  .video-watch {
-    font-size: 7.5pt;
-    font-weight: 700;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    color: rgba(0,195,255,0.7);
   }
 
   .video-body {
@@ -528,18 +481,21 @@ const sorrisoVids = [
 ];
 
 function videoCard(v) {
-  return `<a class="video-card" href="https://drive.google.com/file/d/${v.id}/view" target="_blank" rel="noopener">
-    <div class="video-thumb">
-      <div class="video-play">▶</div>
-      <div class="video-watch">Watch on Drive ↗</div>
-    </div>
+  return `<div class="video-card">
+    <iframe
+      class="video-frame"
+      src="https://drive.google.com/file/d/${v.id}/preview"
+      allow="autoplay"
+      allowfullscreen
+      loading="lazy">
+    </iframe>
     <div class="video-body">
       <div class="video-tag">${v.tag}</div>
       <div class="video-title">${v.title}</div>
       <div class="video-meta">${v.meta}</div>
       <div class="video-desc">${v.desc}</div>
     </div>
-  </a>`;
+  </div>`;
 }
 
 document.getElementById('iimb-videos').innerHTML    = iimbVids.map(videoCard).join('');
