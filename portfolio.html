@@ -1,0 +1,513 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Yash Lakhani – Creatives & Storytelling</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet"/>
+<style>
+  :root {
+    --bluedark: #134453;
+    --blue9: #00c3ff;
+    --yellow5: #f6c644;
+    --yellow1: #fffdf3;
+    --white: #ffffff;
+    --gray1: #f0f4f6;
+    --gray2: #e4e9ec;
+    --black8: #1d1d1d;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--gray2);
+    color: var(--black8);
+  }
+
+  /* ── HEADER ── */
+  .header {
+    background: var(--bluedark);
+    padding: 20px 36px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .header-name {
+    font-size: 17pt;
+    font-weight: 700;
+    color: #fff;
+    line-height: 1.2;
+    margin-bottom: 6px;
+  }
+
+  .header-name span { color: var(--blue9); }
+
+  .header-tagline {
+    font-size: 8.5pt;
+    font-weight: 500;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: rgba(0,195,255,0.65);
+  }
+
+  .cv-link {
+    display: inline-block;
+    background: var(--blue9);
+    color: #111 !important;
+    font-size: 8pt;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    padding: 7px 16px;
+    border-radius: 3px;
+    text-decoration: none;
+    white-space: nowrap;
+  }
+
+  /* ── INTRO ── */
+  .intro {
+    background: var(--yellow1);
+    border-bottom: 3px solid var(--yellow5);
+    padding: 16px 36px;
+    font-size: 10.5pt;
+    color: #555;
+    line-height: 1.8;
+  }
+
+  .intro strong { color: #664a00; font-weight: 600; }
+
+  /* ── SECTION HEADER ── */
+  .section-wrap {
+    padding: 28px 30px 12px;
+    display: flex;
+    align-items: baseline;
+    gap: 14px;
+  }
+
+  .section-title {
+    font-size: 10pt;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--bluedark);
+    white-space: nowrap;
+  }
+
+  .section-sub {
+    font-size: 9pt;
+    color: #999;
+    white-space: nowrap;
+  }
+
+  .section-line {
+    flex: 1;
+    height: 1.5px;
+    background: linear-gradient(to right, rgba(0,195,255,0.4), transparent);
+    min-width: 20px;
+  }
+
+  /* ── MASONRY PHOTO GRID ── */
+  .masonry {
+    padding: 0 26px 4px;
+    columns: 4;
+    column-gap: 9px;
+  }
+
+  .photo-card {
+    break-inside: avoid;
+    margin-bottom: 9px;
+    position: relative;
+    border-radius: 6px;
+    overflow: hidden;
+    cursor: zoom-in;
+    background: #ccc;
+  }
+
+  .photo-card img {
+    width: 100%;
+    display: block;
+    transition: transform 0.35s ease;
+  }
+
+  .photo-card:hover img { transform: scale(1.04); }
+
+  .photo-card .overlay {
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    background: linear-gradient(to top, rgba(19,68,83,0.93) 0%, rgba(19,68,83,0.1) 65%, transparent 100%);
+    padding: 32px 12px 12px;
+    opacity: 0;
+    transition: opacity 0.25s ease;
+  }
+
+  .photo-card:hover .overlay { opacity: 1; }
+
+  .overlay-tag {
+    font-size: 7.5pt;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--blue9);
+    margin-bottom: 3px;
+  }
+
+  .overlay-desc {
+    font-size: 8.5pt;
+    color: #c5dde7;
+    line-height: 1.45;
+  }
+
+  /* ── LIGHTBOX ── */
+  .lightbox {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.9);
+    z-index: 999;
+    align-items: center;
+    justify-content: center;
+    cursor: zoom-out;
+  }
+
+  .lightbox.active { display: flex; }
+
+  .lightbox img {
+    max-width: 90vw;
+    max-height: 90vh;
+    border-radius: 4px;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.6);
+  }
+
+  .lb-close {
+    position: absolute;
+    top: 20px; right: 28px;
+    color: rgba(255,255,255,0.7);
+    font-size: 26pt;
+    cursor: pointer;
+    line-height: 1;
+    font-weight: 300;
+  }
+
+  .lb-close:hover { color: var(--blue9); }
+
+  /* ── VIDEO GRID ── */
+  .video-grid {
+    padding: 0 26px 4px;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 10px;
+  }
+
+  .video-card {
+    background: var(--white);
+    border-radius: 6px;
+    overflow: hidden;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.08);
+  }
+
+  .video-frame {
+    width: 100%;
+    aspect-ratio: 16/9;
+    border: none;
+    display: block;
+    background: #000;
+  }
+
+  .video-body {
+    padding: 12px 14px 14px;
+    border-top: 2px solid var(--gray2);
+  }
+
+  .video-tag {
+    font-size: 7pt;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--blue9);
+    margin-bottom: 5px;
+  }
+
+  .video-title {
+    font-size: 10pt;
+    font-weight: 700;
+    color: var(--bluedark);
+    line-height: 1.3;
+    margin-bottom: 5px;
+  }
+
+  .video-meta {
+    font-size: 8.5pt;
+    color: #888;
+    line-height: 1.6;
+  }
+
+  .video-desc {
+    font-size: 8.5pt;
+    color: #555;
+    line-height: 1.6;
+    margin-top: 5px;
+  }
+
+  /* ── FOOTER ── */
+  .footer {
+    background: var(--bluedark);
+    padding: 16px 36px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 28px;
+  }
+
+  .footer-txt { font-size: 8.5pt; color: rgba(176,204,216,0.65); }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 1100px) { .masonry { columns: 3; } }
+
+  @media (max-width: 720px) {
+    .masonry { columns: 2; padding: 0 14px 4px; }
+    .video-grid { padding: 0 14px 4px; grid-template-columns: 1fr; }
+    .section-wrap { padding: 20px 14px 10px; }
+    .header { padding: 16px 18px; flex-wrap: wrap; gap: 10px; }
+    .intro { padding: 14px 18px; font-size: 9.5pt; }
+    .footer { padding: 14px 18px; flex-wrap: wrap; gap: 8px; }
+    .section-sub { display: none; }
+  }
+
+  @media (max-width: 480px) {
+    .masonry { columns: 1; }
+  }
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<div class="header">
+  <div>
+    <div class="header-name">Yash <span>Lakhani</span></div>
+    <div class="header-tagline">Creatives &amp; Storytelling &nbsp;·&nbsp; Vision → Reality</div>
+  </div>
+  <a class="cv-link" href="https://yashlakhani-dev.github.io/yashlakhaniportfolio/" target="_blank">Back to CV ↗</a>
+</div>
+
+<!-- INTRO -->
+<div class="intro">
+  <strong>This isn't a photography portfolio.</strong> It's a record of creative instinct applied across formats — photography, film, event marketing, case study videos. Two chapters: a photography club built from scratch at PDPU (2010–14), and video productions at IIM Bangalore (2017–19). Different tools, same instinct: how do you make people feel something?
+</div>
+
+<!-- ══ SECTION 1: LIVE STUDIO SESSIONS ══ -->
+<div class="section-wrap">
+  <div class="section-title">Live Studio Sessions</div>
+  <div class="section-sub">Sorriso Photography Club · PDPU, 2010–14</div>
+  <div class="section-line"></div>
+</div>
+<div style="padding: 0 30px 16px; font-size: 10pt; color: #555; line-height: 1.75; max-width: 820px;">
+  Founder &amp; President of Sorriso, the Photography Club at PDPU — built it from the ground up and set up live photo studios at college events for on-the-spot shoots and instant prints.
+</div>
+
+<div class="masonry" id="studio-grid"></div>
+
+<!-- ══ SECTION 2: IIMB VIDEO CREATIVES ══ -->
+<div class="section-wrap">
+  <div class="section-title">Video Creatives &nbsp;·&nbsp; IIM Bangalore</div>
+  <div class="section-sub">2017–19 · Case study films, event trailers, cultural fest productions</div>
+  <div class="section-line"></div>
+</div>
+<div style="padding: 0 30px 16px; font-size: 10pt; color: #555; line-height: 1.75; max-width: 820px;">
+  Single-handedly produced each piece from concept to delivery, doing all the editing myself in Adobe Premiere Pro, After Effects, and Sony Vegas Pro.
+</div>
+
+<div class="video-grid" id="iimb-videos"></div>
+
+<!-- ══ SECTION 3: SORRISO FILMS & PROMOS ══ -->
+<div class="section-wrap">
+  <div class="section-title">Films &amp; Promos &nbsp;·&nbsp; Sorriso Club, PDPU</div>
+  <div class="section-sub">Promotional films and event videos produced by the club</div>
+  <div class="section-line"></div>
+</div>
+
+<div class="video-grid" id="sorriso-videos"></div>
+
+<!-- ══ SECTION 4: RECREATIONAL PHOTOGRAPHY ══ -->
+<div class="section-wrap">
+  <div class="section-title">Recreational Photography &nbsp;·&nbsp; Sorriso Club, PDPU</div>
+  <div class="section-sub">2010–14 · Founded from scratch · 200+ members</div>
+  <div class="section-line"></div>
+</div>
+
+<div class="masonry" id="photo-grid"></div>
+
+<!-- FOOTER -->
+<div class="footer">
+  <div class="footer-txt">Yash Lakhani &nbsp;·&nbsp; Creatives &amp; Storytelling</div>
+  <a class="cv-link" href="https://yashlakhani-dev.github.io/yashlakhaniportfolio/">Full CV ↗</a>
+</div>
+
+<!-- LIGHTBOX -->
+<div class="lightbox" id="lightbox">
+  <span class="lb-close" id="lb-close">×</span>
+  <img id="lb-img" src="" alt=""/>
+</div>
+
+<script>
+// ── STUDIO PHOTOS ─────────────────────────────────────────
+const studios = [
+  { f: 'portfolio_images/studio_1925029_10202646460697244_1794952375_n.jpg', tag: 'Studio', desc: 'Live studio session' },
+  { f: 'portfolio_images/studio_img-20150813-wa0011.jpg', tag: 'Behind the Lens', desc: 'Club in action' },
+  { f: 'portfolio_images/studio_img-20150813-wa0014.jpg', tag: 'Studio',          desc: 'Lighting setup' },
+  { f: 'portfolio_images/studio_img-20150813-wa0016.jpg', tag: 'Studio',          desc: 'Club session' },
+  { f: 'portfolio_images/studio_img_7229.jpg',            tag: 'Portrait',        desc: 'Studio portrait' },
+  { f: 'portfolio_images/studio_img_7230.jpg',            tag: 'Studio',          desc: 'Controlled light' },
+  { f: 'portfolio_images/studio_img_7288.jpg',            tag: 'Studio',          desc: 'Live setup' },
+];
+
+// ── RECREATIONAL PHOTOS ───────────────────────────────────
+const photos = [
+  { f: 'portfolio_images/photo_img_6012.jpg',   tag: 'Field',      desc: 'Composition & light' },
+  { f: 'portfolio_images/photo_img_6053.jpg',   tag: 'Field',      desc: 'DSLR capture' },
+  { f: 'portfolio_images/photo_p1010164.jpg',   tag: 'Outdoor',    desc: 'Natural light' },
+  { f: 'portfolio_images/photo_p1010172.jpg',   tag: 'Outdoor',    desc: 'Natural light' },
+  { f: 'portfolio_images/photo_p1010196.jpg',   tag: 'Detail',     desc: 'Close-up texture' },
+  { f: 'portfolio_images/photo_p1010203.jpg',   tag: 'Candid',     desc: 'Unposed moment' },
+  { f: 'portfolio_images/photo_p1010250.jpg',   tag: 'Composition',desc: 'Frame & geometry' },
+  { f: 'portfolio_images/photo_p1010876.jpg',   tag: 'Field',      desc: 'Lumix capture' },
+  { f: 'portfolio_images/photo_p1020422.jpg',   tag: 'Colour',     desc: 'Colour & texture' },
+  { f: 'portfolio_images/photo_p1030163.jpg',   tag: 'Landscape',  desc: 'Wide frame' },
+  { f: 'portfolio_images/photo_p1040509.jpg',   tag: 'Landscape',  desc: 'Outdoor scene' },
+  { f: 'portfolio_images/photo_p1040977.jpg',   tag: 'Field',      desc: 'Natural light' },
+  { f: 'portfolio_images/photo_p1050175.jpg',   tag: 'Field',      desc: 'Lumix capture' },
+  { f: 'portfolio_images/photo_p1050232.jpg',   tag: 'Field',      desc: 'Outdoor composition' },
+];
+
+function photoCard(p) {
+  return `<div class="photo-card" data-src="${p.f}">
+    <img src="${p.f}" alt="${p.desc}" loading="lazy"/>
+    <div class="overlay">
+      <div class="overlay-tag">${p.tag}</div>
+      <div class="overlay-desc">${p.desc}</div>
+    </div>
+  </div>`;
+}
+
+document.getElementById('studio-grid').innerHTML = studios.map(photoCard).join('');
+document.getElementById('photo-grid').innerHTML  = photos.map(photoCard).join('');
+
+// ── LIGHTBOX ──────────────────────────────────────────────
+const lb      = document.getElementById('lightbox');
+const lbImg   = document.getElementById('lb-img');
+const lbClose = document.getElementById('lb-close');
+
+document.querySelectorAll('.photo-card').forEach(card => {
+  card.addEventListener('click', () => {
+    lbImg.src = card.dataset.src;
+    lb.classList.add('active');
+  });
+});
+
+[lbClose, lb].forEach(el => {
+  el.addEventListener('click', e => {
+    if (e.target === lb || e.target === lbClose) {
+      lb.classList.remove('active');
+      lbImg.src = '';
+    }
+  });
+});
+
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') { lb.classList.remove('active'); lbImg.src = ''; }
+});
+
+// ── IIMB VIDEOS ───────────────────────────────────────────
+const iimbVids = [
+  {
+    id:    '1WrZQXkMXvGtQCQfvzCB9sFvXAF6b2H3B',
+    tag:   'Event Film',
+    title: 'Unmaad Theme Film',
+    meta:  'IIM Bangalore Cultural Fest · 2017–18',
+    desc:  'Theme video for Unmaad — IIM B\'s annual cultural festival. Concept, script and full production.',
+  },
+  {
+    id:    '1BWIuEC3o7BvqJFMI5NBPA2nBCJH-E8p5',
+    tag:   'Concept',
+    title: 'Start-Up Concept Film',
+    meta:  'Concept Pitch · IIM Bangalore',
+    desc:  'A visual pitch for a startup concept — storytelling format instead of a slide deck.',
+  },
+  {
+    id:    '1hHuMMV5tGI8UMNm0oeLYU9G0gR9ucLg8',
+    tag:   'Case Study',
+    title: 'L&T Infotech Case Study',
+    meta:  'Case Study Film · IIM Bangalore',
+    desc:  'Video case study format — combining structured business narrative with cinematic presentation.',
+  },
+  {
+    id:    '1NW9PSSC0-wv1pEZ3Qx8jUXv91yRUwe8a',
+    tag:   'Event Film',
+    title: 'Treasure Hunt — Event Film',
+    meta:  'Event Film · Cultural Fest',
+    desc:  'Promo and recap for the cultural fest treasure hunt. High-energy, fast-cut format.',
+  },
+  {
+    id:    '1f1aDkW9Smz5gUveAz0T450Jvi3QR87Rk',
+    tag:   'Trailer',
+    title: 'INOX × Unmaad 2018 Trailer',
+    meta:  'Event Trailer · Cultural Fest',
+    desc:  'Movie-style trailer for Unmaad 2018 in partnership with INOX — scripted, shot and cut.',
+  },
+  {
+    id:    '1a6tx01HeBvzfLPmKF9nXQFCxoABeszOr',
+    tag:   'Case Study',
+    title: 'Samsung Case Study',
+    meta:  'Case Study Film · IIM Bangalore',
+    desc:  'Video case study produced for Samsung — narrative-first, brand analysis as the backbone.',
+  },
+];
+
+// ── SORRISO VIDEOS ────────────────────────────────────────
+const sorrisoVids = [
+  {
+    id:    '0B37rVXNay6GWOWh5dzNfX1pxZVU',
+    tag:   'Event Film',
+    title: 'Soul Pepper Promo',
+    meta:  'Event Promo · PDPU',
+    desc:  'Promotional film for a college event — fast turnaround, scripted and shot by the club.',
+  },
+  {
+    id:    '0B37rVXNay6GWY1E5UEN3OGp4M00',
+    tag:   'Promo Film',
+    title: 'Sorriso Promotional Video',
+    meta:  'Club Promo · PDPU, 2013–14',
+    desc:  'Promotional film built to sell the club\'s vision to incoming students. Scripted, shot and edited by club members.',
+  },
+  {
+    id:    '0B37rVXNay6GWTjVncVgyV0VTbWc',
+    tag:   'Creative',
+    title: 'IIM-B Countdown',
+    meta:  'Creative Short · 2017',
+    desc:  'A short countdown piece produced for IIM Bangalore — creative direction exercise.',
+  },
+];
+
+function videoCard(v) {
+  return `<div class="video-card">
+    <iframe
+      class="video-frame"
+      src="https://drive.google.com/file/d/${v.id}/preview?usp=sharing"
+      allow="autoplay; encrypted-media"
+      allowfullscreen
+      loading="lazy">
+    </iframe>
+    <div class="video-body">
+      <div class="video-tag">${v.tag}</div>
+      <div class="video-title">${v.title}</div>
+      <div class="video-meta">${v.meta}</div>
+      <div class="video-desc">${v.desc}</div>
+    </div>
+  </div>`;
+}
+
+document.getElementById('iimb-videos').innerHTML    = iimbVids.map(videoCard).join('');
+document.getElementById('sorriso-videos').innerHTML = sorrisoVids.map(videoCard).join('');
+</script>
+</body>
+</html>
