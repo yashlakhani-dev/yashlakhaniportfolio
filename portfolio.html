@@ -311,16 +311,7 @@
 
 <div class="video-grid" id="iimb-videos"></div>
 
-<!-- ══ SECTION 3: SORRISO FILMS & PROMOS ══ -->
-<div class="section-wrap">
-  <div class="section-title">Films &amp; Promos &nbsp;·&nbsp; Sorriso Club, PDPU</div>
-  <div class="section-sub">Promotional films and event videos produced by the club</div>
-  <div class="section-line"></div>
-</div>
-
-<div class="video-grid" id="sorriso-videos"></div>
-
-<!-- ══ SECTION 4: RECREATIONAL PHOTOGRAPHY ══ -->
+<!-- ══ SECTION 3: RECREATIONAL PHOTOGRAPHY ══ -->
 <div class="section-wrap">
   <div class="section-title">Recreational Photography &nbsp;·&nbsp; Sorriso Club, PDPU</div>
   <div class="section-sub">2010–14 · Founded from scratch · 200+ members</div>
@@ -453,12 +444,9 @@ const iimbVids = [
     meta:  'Case Study Film · IIM Bangalore',
     desc:  'Video case study produced for Samsung — narrative-first, brand analysis as the backbone.',
   },
-];
-
-// ── SORRISO VIDEOS ────────────────────────────────────────
-const sorrisoVids = [
   {
     id:    '0B37rVXNay6GWOWh5dzNfX1pxZVU',
+    rk:    '0-3zW2jPMasToUOiycqapjWw',
     tag:   'Event Film',
     title: 'Soul Pepper Promo',
     meta:  'Event Promo · PDPU',
@@ -466,6 +454,7 @@ const sorrisoVids = [
   },
   {
     id:    '0B37rVXNay6GWY1E5UEN3OGp4M00',
+    rk:    '0-mbB4qAGqw5kHduDVN-wryQ',
     tag:   'Promo Film',
     title: 'Sorriso Promotional Video',
     meta:  'Club Promo · PDPU, 2013–14',
@@ -473,6 +462,7 @@ const sorrisoVids = [
   },
   {
     id:    '0B37rVXNay6GWTjVncVgyV0VTbWc',
+    rk:    '0-sdlBegaGivIw0WUj6RoWVA',
     tag:   'Creative',
     title: 'IIM-B Countdown',
     meta:  'Creative Short · 2017',
@@ -481,10 +471,13 @@ const sorrisoVids = [
 ];
 
 function videoCard(v) {
+  const src = v.rk
+    ? `https://drive.google.com/file/d/${v.id}/preview?resourcekey=${v.rk}`
+    : `https://drive.google.com/file/d/${v.id}/preview`;
   return `<div class="video-card">
     <iframe
       class="video-frame"
-      src="https://drive.google.com/file/d/${v.id}/preview"
+      src="${src}"
       allow="autoplay"
       allowfullscreen
       loading="lazy">
@@ -498,8 +491,7 @@ function videoCard(v) {
   </div>`;
 }
 
-document.getElementById('iimb-videos').innerHTML    = iimbVids.map(videoCard).join('');
-document.getElementById('sorriso-videos').innerHTML = sorrisoVids.map(videoCard).join('');
+document.getElementById('iimb-videos').innerHTML = iimbVids.map(videoCard).join('');
 </script>
 </body>
 </html>
